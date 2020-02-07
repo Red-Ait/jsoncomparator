@@ -111,7 +111,8 @@ public class JsonreaderApplication {
 
         List<String> results = new ArrayList<>();
 
-        if(ClassUtils.isPrimitiveOrWrapper(oldJsonObject.getClass()) | oldJsonObject instanceof String) {
+        if(ClassUtils.isPrimitiveOrWrapper(oldJsonObject.getClass()) | oldJsonObject instanceof String
+                | newJsonObject instanceof String) {
             if (!newJsonObject.equals(oldJsonObject)) {
                 results.add(" est changé de: " + oldJsonObject + " à: " + newJsonObject) ;
             }
@@ -135,7 +136,7 @@ public class JsonreaderApplication {
 
             for (Map.Entry<String, Object> entry : oldActorProperties.entrySet()) {
                 if (newActorProperties.containsKey(entry.getKey())) {
-                    List<String> aux = compareJsonObjetcts( newActorProperties.get(entry.getKey()), entry.getValue(), entry.getKey());
+                    List<String> aux = compareJsonObjetcts( entry.getValue(),  newActorProperties.get(entry.getKey()), entry.getKey());
                     for (String i : aux) {
                         aux.set(aux.indexOf(i), "/[" + entry.getKey() + "]" + i);
                     }

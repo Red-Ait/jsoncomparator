@@ -1,7 +1,7 @@
 {
   "Actors": [
     {
-	  "id":10,
+      "id":10,
       "name": "Tom Cruise",
       "age": 56,
       "Born At": "Syracuse, NY",
@@ -24,7 +24,7 @@
       ]
     },
     {
-	  "id":20,
+      "id":20,
       "name": "Robert Downey Jr.",
       "age": 53,
       "Born At": "New York City, NY",
