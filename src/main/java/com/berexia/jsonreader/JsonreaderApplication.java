@@ -34,7 +34,6 @@ public class JsonreaderApplication {
                 int id = oldActorObj.getInt("id"); // id dans oldJson
                 boolean isExist = false; //
 
-                List<String> actions = new ArrayList<>();
                 for (Object newActor : newActorsList) {
 
                     JSONObject newActorObj = (JSONObject) newActor;
@@ -53,7 +52,7 @@ public class JsonreaderApplication {
                 }
                 if(!isExist) {
                     System.out.println("[Actor: " + id + "] supprimé: " );
-                }
+                 }
             }
             for (Object newActor : newActorsList) {
                 JSONObject newActorObj = (JSONObject) newActor;
