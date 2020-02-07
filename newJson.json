@@ -1,0 +1,53 @@
+{
+  "Actors": [
+    {
+	  "id":10,
+      "name": "Jack Cruise",
+      "age": 51,
+      "Born At": "Syracuse, NY",
+      "Birthdate": "July 3, 1962",
+      "photo": "https://jsonformatter.org/img/tom-cruise.jpg",
+      "wife": "Marine Cruise",
+      "swife": "Marine Cruise",
+      "weight": 67.5,
+      "jge": {
+        "weight": 67.5,
+        "hasChildren": true,
+        "hasGreyHair": false
+      },
+      "hasChildren": true,
+      "hasGreyHair": false,
+      "children": [
+        "Suri",
+        "Isabella Jane",
+        "Connor"
+      ]
+    },
+    {
+      "id":30,
+      "name": "Robert Downey Jr.",
+      "age": 34,
+      "Born At": "Paris",
+      "Birthdate": "February 3, 1985",
+      "photo": "https://jsonformatter.org/img/Robert-Downey-Jr.jpg",
+      "wife": "Anna Logvy",
+      "weight": 72.1,
+      "hasChildren": false,
+      "hasGreyHair": false,
+      "children": []
+    },
+    {
+      "id":31,
+      "name": "Robert Downey Jr.",
+      "age": 34,
+      "Born At": "Paris",
+      "Birthdate": "February 3, 1985",
+      "photo": "https://jsonformatter.org/img/Robert-Downey-Jr.jpg",
+      "wife": "Anna Logvy",
+      "weight": 72.1,
+      "hasChildren": false,
+      "hasGreyHair": false,
+      "children": []
+    }
+  ]
+}

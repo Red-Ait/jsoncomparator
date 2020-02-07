@@ -1,0 +1,61 @@
+{
+  "Actors": [
+    {
+	  "id":10,
+      "name": "Tom Cruise",
+      "age": 56,
+      "Born At": "Syracuse, NY",
+      "Birthdate": "July 3, 1962",
+      "photo": "https://jsonformatter.org/img/tom-cruise.jpg",
+      "wife": null,
+      "jge": {
+        "weight": 67.5,
+        "hasChildren": true,
+        "hasGreyHair": true
+      },
+      "weight": 67.5,
+      "hasChildren": true,
+      "hasGreyHair": false,
+      "hdxxasGreyHair": false,
+      "children": [
+        "Suri",
+        "Isabella Jane",
+        "Connor"
+      ]
+    },
+    {
+	  "id":20,
+      "name": "Robert Downey Jr.",
+      "age": 53,
+      "Born At": "New York City, NY",
+      "Birthdate": "April 4, 1965",
+      "photo": "https://jsonformatter.org/img/Robert-Downey-Jr.jpg",
+      "wife": "Susan Downey",
+      "weight": 77.1,
+      "hasChildren": true,
+      "hasGreyHair": false,
+      "children": [
+        "Indio Falconer",
+        "Avri Roel",
+        "Exton Elias"
+      ]
+    },
+    {
+      "id":30,
+      "name": "Robert Downey Jr.",
+      "age": 34,
+      "Born At": "Paris",
+      "Birthdate": "February 3, 1985",
+      "photo": "https://jsonformatter.org/img/Robert-Downey-Jr.jpg",
+      "wife": "Anna Logvy",
+      "weight": 72.1,
+      "hasChildren": false,
+      "hasGreyHair": false,
+      "children": [
+        "gjndb",
+        "gjnssdb",
+        "gjndbddd"
+      ]
+    }
+  ]
+}
