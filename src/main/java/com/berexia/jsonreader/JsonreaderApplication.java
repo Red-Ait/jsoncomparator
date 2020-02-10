@@ -26,8 +26,6 @@ public class JsonreaderApplication {
             JSONArray newActorsList = new JSONObject(newContent).getJSONArray("Actors");
 
 
-//            compareJsonObjetcts(new JSONObject(oldContent), new JSONObject(newContent));
-
             for (Object oldActor : oldActorsList) {
                 JSONObject oldActorObj = (JSONObject) oldActor;
 

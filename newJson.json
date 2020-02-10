@@ -9,6 +9,10 @@
       "photo": "https://jsonformatter.org/img/tom-cruise.jpg",
       "wife": "Marine Cruise",
       "swife": "Marine Cruise",
+      "adresse": {
+        "city": "Agadir",
+        "country": "Morocco"
+      },
       "weight": 67.5,
       "jge": {
         "aaa": {
