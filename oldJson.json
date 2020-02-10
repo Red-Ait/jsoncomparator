@@ -11,7 +11,13 @@
         },
         {
           "id": 2,
-          "name": "beta1"
+          "name": "beta1",
+          "otrr": [
+            {
+              "id": 2,
+              "nal": 1
+            }
+          ]
         }
       ],
       "Born At": "Syracuse, NY",

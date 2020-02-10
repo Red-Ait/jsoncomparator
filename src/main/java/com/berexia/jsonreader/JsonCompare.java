@@ -16,7 +16,7 @@ public class JsonCompare {
     public static void setIdentifierKeyName(String identifierKeyName) {
         IdentifierKeyName = identifierKeyName;
     }
-    public static List<String> comparJsonArrays(JSONArray oldJsonArray, JSONArray newJsonArray, String proprieteName) {
+    private static List<String> comparJsonArrays(JSONArray oldJsonArray, JSONArray newJsonArray, String proprieteName) {
         if(!oldJsonArray.isEmpty())
             if (!ClassUtils.isPrimitiveOrWrapper(oldJsonArray.get(0).getClass()) && !(oldJsonArray.get(0) instanceof String) ) {
                 if(((JSONObject)oldJsonArray.get(0)).has(IdentifierKeyName))
@@ -25,7 +25,7 @@ public class JsonCompare {
         return comparJsonArrayWithoutId(oldJsonArray, newJsonArray, proprieteName);
     }
 
-    public static List<String> comparJsonArrayWithoutId(JSONArray oldJsonArray, JSONArray newJsonArray, String proprieteName) {
+    private static List<String> comparJsonArrayWithoutId(JSONArray oldJsonArray, JSONArray newJsonArray, String proprieteName) {
 
         List<String> results = new ArrayList<>();
 
@@ -55,9 +55,9 @@ public class JsonCompare {
     }
 
     public static List<String> compare(Object oldJsonObject, Object newJsonObject) {
-        compareJsonObjetcts(oldJsonObject, newJsonObject, "");
+        return  compareJsonObjetcts(oldJsonObject, newJsonObject, "");
     }
-    public static List<String> compareJsonObjetcts(Object oldJsonObject, Object newJsonObject, String proprieteName) {
+    private static List<String> compareJsonObjetcts(Object oldJsonObject, Object newJsonObject, String proprieteName) {
 
         List<String> results = new ArrayList<>();
 
@@ -111,7 +111,7 @@ public class JsonCompare {
         return results;
     }
 
-    public static List<String> compareJsonArraysWithId(JSONArray oldArray, JSONArray newArray, String proprieteName) {
+    private static List<String> compareJsonArraysWithId(JSONArray oldArray, JSONArray newArray, String proprieteName) {
         List<String > results = new ArrayList<>();
         for(Object oldObject: oldArray) {
             int oldId = ((JSONObject) oldObject).getInt(IdentifierKeyName);
@@ -129,7 +129,7 @@ public class JsonCompare {
         for(Object newObject: newArray) {
             int newId = ((JSONObject) newObject).getInt(IdentifierKeyName);
             boolean flag = false;
-            for(Object oldObject: newArray) {
+            for(Object oldObject: oldArray) {
                 int oldId = ((JSONObject) oldObject).getInt(IdentifierKeyName);
                 if (newId == oldId) {
                     flag = true;

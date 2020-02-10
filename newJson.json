@@ -16,11 +16,23 @@
       "class": [
         {
           "id": 4,
-          "name": "alpha"
+          "name": "alpha",
+          "otrr": [
+            {
+              "id": 2,
+              "nal": 1
+            }
+          ]
         },
         {
           "id": 2,
-          "name": "beta"
+          "name": "beta",
+          "otrr": [
+            {
+              "id": 2,
+              "nal": 11
+            }
+          ]
         }
       ],
       "weight": 67.5,
