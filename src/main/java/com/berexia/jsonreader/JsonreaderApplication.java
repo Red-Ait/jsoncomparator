@@ -22,60 +22,28 @@ public class JsonreaderApplication {
             String oldContent = FileUtils.readFileToString(oldFile, "utf-8");
             String newContent = FileUtils.readFileToString(newFile, "utf-8");
 
-            JSONArray oldActorsList = new JSONObject(oldContent).getJSONArray("Actors");
-            JSONArray newActorsList = new JSONObject(newContent).getJSONArray("Actors");
+            JSONObject oldObject = new JSONObject(oldContent);
+            JSONObject newObject = new JSONObject(newContent);
 
+            compareJsonObjetcts(oldObject, newObject, "").forEach(r -> {
+                System.out.println(r);
+            });
 
-            for (Object oldActor : oldActorsList) {
-                JSONObject oldActorObj = (JSONObject) oldActor;
-
-                int id = oldActorObj.getInt("id"); // id dans oldJson
-                boolean isExist = false; //
-
-                for (Object newActor : newActorsList) {
-
-                    JSONObject newActorObj = (JSONObject) newActor;
-                    // rechercher l'objet dans "newJson"
-                    if (newActorObj.getInt("id") == id) {
-                        isExist = true;
-
-                        List<String> aux = compareJsonObjetcts(oldActor, newActor, "actors");
-                        for (String i : aux) {
-                            aux.set(aux.indexOf(i), "[Actor: " + id + "]" + i);
-                        }
-                        aux.forEach(r -> {
-                            System.out.println(r);
-                        });
-                    }
-                }
-                if(!isExist) {
-                    System.out.println("[Actor: " + id + "] supprimé: " );
-                 }
-            }
-            for (Object newActor : newActorsList) {
-                JSONObject newActorObj = (JSONObject) newActor;
-
-                int id = newActorObj.getInt("id"); // id dans newJson
-                boolean isExist = false; //
-
-                for (Object oldActor : oldActorsList) {
-
-                    JSONObject oldActorObj = (JSONObject) oldActor;
-                    // rechercher l'objet dans "newJson"
-                    if (oldActorObj.getInt("id") == id) {
-                        isExist = true;
-                    }
-                }
-                if(!isExist) {
-                    System.out.println("[Actor: " + id + "] ajouté: " );
-                }
-            }
-       } catch (Exception e)  {
+        } catch (Exception e)  {
             e.printStackTrace();
         }
     }
 
-    public static List<String> comparJsonArray(JSONArray oldJsonArray, JSONArray newJsonArray, String proprieteName) {
+    public static List<String> comparJsonArrays(JSONArray oldJsonArray, JSONArray newJsonArray, String proprieteName) {
+        if(!oldJsonArray.isEmpty())
+            if (!ClassUtils.isPrimitiveOrWrapper(oldJsonArray.get(0).getClass()) && !(oldJsonArray.get(0) instanceof String) ) {
+                if(((JSONObject)oldJsonArray.get(0)).has("id"))
+                    return compareJsonArraysWithId(oldJsonArray, newJsonArray, proprieteName);
+            }
+        return comparJsonArrayWithoutId(oldJsonArray, newJsonArray, proprieteName);
+    }
+
+    public static List<String> comparJsonArrayWithoutId(JSONArray oldJsonArray, JSONArray newJsonArray, String proprieteName) {
 
         List<String> results = new ArrayList<>();
 
@@ -87,7 +55,7 @@ public class JsonreaderApplication {
                 }
             }
             if (!flag) {
-                results.add("\" " + oldItem + " \" est supprimé de " + proprieteName) ;
+                results.add(proprieteName + " \"" + oldItem + "\" est supprimé") ;
             }
         }
         for (Object newItem: newJsonArray) {
@@ -98,7 +66,7 @@ public class JsonreaderApplication {
                 }
             }
             if (!flag) {
-                results.add("\" " + newItem + " \" est ajouté dans " + proprieteName) ;
+                results.add(proprieteName + " \"" + newItem + "\" est ajouté") ;
             }
         }
         return results;
@@ -108,19 +76,20 @@ public class JsonreaderApplication {
 
         List<String> results = new ArrayList<>();
 
+
         if(oldJsonObject.getClass().getName() != newJsonObject.getClass().getName()){
             // Les deux objets sont de type déffirent
-            results.add(" est changé de: " + oldJsonObject + " à: " + newJsonObject) ;
+            results.add(proprieteName + " est changé de: " + oldJsonObject + " à: " + newJsonObject) ;
         } else {
             if(ClassUtils.isPrimitiveOrWrapper(oldJsonObject.getClass()) | oldJsonObject instanceof String  ) {
                 // Les deux objets sont de type primitive
                 if (!newJsonObject.equals(oldJsonObject)) {
                     // Les valeurs sont de valeur déffirent
-                    results.add(" est changé de: " + oldJsonObject + " à: " + newJsonObject) ;
+                    results.add(proprieteName + " est changé de: " + oldJsonObject + " à: " + newJsonObject) ;
                 }
             } else {
                 if (oldJsonObject instanceof JSONArray) // Les deux objets sont de type Array
-                    return comparJsonArray((JSONArray) oldJsonObject, (JSONArray) newJsonObject, proprieteName);
+                    return comparJsonArrays((JSONArray) oldJsonObject, (JSONArray) newJsonObject, proprieteName);
 
                 Map<String, Object> oldActorProperties = new HashMap<>();
 
@@ -138,20 +107,17 @@ public class JsonreaderApplication {
 
                 for (Map.Entry<String, Object> entry : oldActorProperties.entrySet()) {
                     if (newActorProperties.containsKey(entry.getKey())) { // Le nouveau objet contient la propriété
-                        List<String> aux = compareJsonObjetcts( entry.getValue(),  newActorProperties.get(entry.getKey()), entry.getKey());
-                        for (String i : aux) {
-                            aux.set(aux.indexOf(i), "/[" + entry.getKey() + "]" + i);
-                        }
-                        results.addAll(aux);
+                        results.addAll(compareJsonObjetcts( entry.getValue(),
+                                newActorProperties.get(entry.getKey()), proprieteName + "/[" +entry.getKey() + "]"));
                     } else {
                         // Le nouveau objet ne contient pas la propriété
-                        results.add(" La propriété \" "+ entry.getKey() + "\"  est supprimée") ;
+                        results.add(proprieteName + "/[" +entry.getKey() + "] La propriété \" "+ entry.getKey() + "\"  est supprimée") ;
                     }
                 }
                 for (Map.Entry<String, Object> entry : newActorProperties.entrySet()) {
                     if (!oldActorProperties.containsKey(entry.getKey())) {
                         // une propriété est ajoutée
-                        results.add(" La propriété \" "+ entry.getKey() + "\"  est ajoutée avec valeur: " + entry.getValue()) ;
+                        results.add(proprieteName + "/[" +entry.getKey() + "] La propriété \" "+ entry.getKey() + "\"  est ajoutée avec valeur: " + entry.getValue()) ;
                     }
                 }
             }
@@ -159,4 +125,35 @@ public class JsonreaderApplication {
 
         return results;
     }
+
+    public static List<String> compareJsonArraysWithId(JSONArray oldArray, JSONArray newArray, String proprieteName) {
+       List<String > results = new ArrayList<>();
+        for(Object oldObject: oldArray) {
+            int oldId = ((JSONObject) oldObject).getInt("id");
+            boolean flag = false;
+            for(Object newObject: newArray) {
+                int newId = ((JSONObject) newObject).getInt("id");
+                if (newId == oldId) {
+                    results.addAll(compareJsonObjetcts(oldObject, newObject, proprieteName + ":" + newId));
+                    flag = true;
+                }
+            }
+            if(!flag)
+                results.add(proprieteName + ":" + oldId + " supprimé" );
+        }
+        for(Object newObject: newArray) {
+            int newId = ((JSONObject) newObject).getInt("id");
+            boolean flag = false;
+            for(Object oldObject: newArray) {
+                int oldId = ((JSONObject) oldObject).getInt("id");
+                if (newId == oldId) {
+                    flag = true;
+                }
+            }
+            if(!flag)
+            results.add(proprieteName + ":" + newId + "] ajouté" );
+        }
+       return  results;
+    }
+
 }

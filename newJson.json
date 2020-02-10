@@ -1,10 +1,10 @@
 {
-  "Actors": [
+  "Acsstors": [
     {
 	  "id":10,
       "name": "Jack Cruise",
       "age": 51,
-      "Born At": "Syracuse, NY",
+      "Born At": null,
       "Birthdate": "July 3, 1962",
       "photo": "https://jsonformatter.org/img/tom-cruise.jpg",
       "wife": "Marine Cruise",
@@ -13,6 +13,16 @@
         "city": "Agadir",
         "country": "Morocco"
       },
+      "class": [
+        {
+          "id": 4,
+          "name": "alpha"
+        },
+        {
+          "id": 2,
+          "name": "beta"
+        }
+      ],
       "weight": 67.5,
       "jge": {
         "aaa": {
