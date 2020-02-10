@@ -111,46 +111,48 @@ public class JsonreaderApplication {
         List<String> results = new ArrayList<>();
 
         if(oldJsonObject.getClass().getName() != newJsonObject.getClass().getName()){
-            // Les deux objets sont de type différents
+            // Les deux objets sont de type déffirent
             results.add(" est changé de: " + oldJsonObject + " à: " + newJsonObject) ;
         } else {
             if(ClassUtils.isPrimitiveOrWrapper(oldJsonObject.getClass()) | oldJsonObject instanceof String  ) {
-                // Les deux obkets sont de type primitive
+                // Les deux objets sont de type primitive
                 if (!newJsonObject.equals(oldJsonObject)) {
-                    // Les valeurs s
+                    // Les valeurs sont de valeur déffirent
                     results.add(" est changé de: " + oldJsonObject + " à: " + newJsonObject) ;
                 }
             } else {
-                if (oldJsonObject instanceof JSONArray)
+                if (oldJsonObject instanceof JSONArray) // Les deux objets sont de type Array
                     return comparJsonArray((JSONArray) oldJsonObject, (JSONArray) newJsonObject, proprieteName);
 
                 Map<String, Object> oldActorProperties = new HashMap<>();
 
-                // stocker les ancienns proprietés dans une map
+                // stocker les ancienns proprietés dans une map(nom de propriété, Objet)
                 for (String key : JSONObject.getNames((JSONObject) oldJsonObject)) {
                     oldActorProperties.put(key,((JSONObject) oldJsonObject).get(key));
                 }
 
                 Map<String, Object> newActorProperties = new HashMap<>();
 
-                // stocker les ancienns proprietés dans une map
+                // stocker les ancienns proprietés dans une map(nom de propriété, Objet)
                 for (String key : JSONObject.getNames((JSONObject) newJsonObject)) {
                     newActorProperties.put(key,((JSONObject) newJsonObject).get(key));
                 }
 
                 for (Map.Entry<String, Object> entry : oldActorProperties.entrySet()) {
-                    if (newActorProperties.containsKey(entry.getKey())) {
+                    if (newActorProperties.containsKey(entry.getKey())) { // Le nouveau objet contient la propriété
                         List<String> aux = compareJsonObjetcts( entry.getValue(),  newActorProperties.get(entry.getKey()), entry.getKey());
                         for (String i : aux) {
                             aux.set(aux.indexOf(i), "/[" + entry.getKey() + "]" + i);
                         }
                         results.addAll(aux);
                     } else {
+                        // Le nouveau objet ne contient pas la propriété
                         results.add(" La propriété \" "+ entry.getKey() + "\"  est supprimée") ;
                     }
                 }
                 for (Map.Entry<String, Object> entry : newActorProperties.entrySet()) {
                     if (!oldActorProperties.containsKey(entry.getKey())) {
+                        // une propriété est ajoutée
                         results.add(" La propriété \" "+ entry.getKey() + "\"  est ajoutée avec valeur: " + entry.getValue()) ;
                     }
                 }
